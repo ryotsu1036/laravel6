@@ -19,6 +19,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('about', 'about');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');

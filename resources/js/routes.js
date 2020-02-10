@@ -1,5 +1,6 @@
 import AppLayout from './pages/admin/layouts/App';
 import Login from './pages/admin/auth/Login';
+import Home from './pages/admin/Home';
 
 export default {
   mode: 'history',
@@ -17,7 +18,13 @@ export default {
       name: 'admin',
       path: '/admin',
       component: AppLayout,
-      children: []
+      children: [
+        {
+          path: 'home',
+          component: Home,
+          meta: { requiresAuth: true }
+        }
+      ]
     }
   ]
 }

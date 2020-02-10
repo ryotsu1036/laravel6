@@ -35,8 +35,10 @@ Vue.component('login-auth', require('./pages/admin/auth/Login.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const router = new VueRouter(routes);
+
 new Vue({
   el: '#app',
-  router: new VueRouter(routes),
+  router: router,
   vuetify: new Vuetify(opts)
 });
