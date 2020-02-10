@@ -18,11 +18,11 @@ export default {
       name: 'admin',
       path: '/admin',
       component: AppLayout,
+      meta: { requiresAuth: true },
       children: [
         {
           path: 'home',
-          component: Home,
-          meta: { requiresAuth: true }
+          component: Home
         }
       ]
     }

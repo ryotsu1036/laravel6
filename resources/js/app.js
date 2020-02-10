@@ -5,6 +5,7 @@ import routes from './routes';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import './bootstrap';
+import axios from 'axios';
 
 const opts = {
   icons: {
@@ -36,6 +37,25 @@ Vue.component('login-auth', require('./pages/admin/auth/Login.vue').default);
  */
 
 const router = new VueRouter(routes);
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // eslint-disable-next-line no-undef
+    axios.get('/user')
+      .then(() => {
+        next();
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          next({ path: '/login' });
+        } else {
+          next();
+        }
+      });
+  } else {
+    next();
+  }
+});
 
 new Vue({
   el: '#app',

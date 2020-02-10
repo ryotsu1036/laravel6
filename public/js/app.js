@@ -60202,6 +60202,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
 /* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -60236,6 +60239,26 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('login-auth', __webpack_req
  */
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"](_routes__WEBPACK_IMPORTED_MODULE_3__["default"]);
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    // eslint-disable-next-line no-undef
+    axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('/user').then(function () {
+      next();
+    })["catch"](function (error) {
+      if (error.response.status === 401) {
+        next({
+          path: '/login'
+        });
+      } else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+});
 new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#app',
   router: router,
@@ -60600,12 +60623,12 @@ __webpack_require__.r(__webpack_exports__);
     name: 'admin',
     path: '/admin',
     component: _pages_admin_layouts_App__WEBPACK_IMPORTED_MODULE_0__["default"],
+    meta: {
+      requiresAuth: true
+    },
     children: [{
       path: 'home',
-      component: _pages_admin_Home__WEBPACK_IMPORTED_MODULE_2__["default"],
-      meta: {
-        requiresAuth: true
-      }
+      component: _pages_admin_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
     }]
   }]
 });
